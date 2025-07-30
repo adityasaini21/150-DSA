@@ -1,1 +1,69 @@
+ques Link -> https://leetcode.com/problems/top-k-frequent-elements/description/
+
+//Sorting
+//Time complexity->O(nlogn)
+//Space complexity->O(n)
+
+
+public class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> count = new HashMap<>();
+        for (int num : nums) {
+            count.put(num, count.getOrDefault(num, 0) + 1);
+        }
+
+        List<int[]> arr = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> entry : count.entrySet()) {
+            arr.add(new int[] {entry.getValue(), entry.getKey()});
+        }
+        arr.sort((a, b) -> b[0] - a[0]);
+
+        int[] res = new int[k];
+        for (int i = 0; i < k; i++) {
+            res[i] = arr.get(i)[1];
+        }
+        return res;
+    }
+}
+
+
+//Bucket Sort
+//Time complexity->O(n)
+//Space complexity->O(n)
+
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        int m = nums.length;
+        List<Integer>[] bucket = new List[m+1];
+        Map<Integer , Integer> map = new HashMap<>();
+
+        for(int n : nums){
+            map.put(n,map.getOrDefault(n,0)+1);
+        }
+
+        for(int keys : map.keySet()){
+            int frequency = map.get(keys);
+
+            if(bucket[frequency] == null){
+                 bucket[frequency]= new ArrayList<>();
+            }
+            bucket[frequency].add(keys);
+        }
+
+        int[] res = new int[k];
+        int counter = 0;
+
+        for(int i=bucket.length-1;i>=0 && counter < k;i--){
+            if(bucket[i]!=null){
+                for(Integer integer : bucket[i]){
+                    res[counter++] = integer;
+
+                }
+                
+            }
+        }
+        return res;
+        
+    }
+}
 
