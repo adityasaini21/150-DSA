@@ -1,1 +1,40 @@
+//Time complexity-> O(m) for each encode() and decode() function calls.
+//Space complexity-> O(m+n) for each encode() and decode() function calls.
+
+class Solution {
+
+    public String encode(List<String> strs) {
+        int m = strs.size();
+
+        if(m == 0){
+            return Character.toString((char)258);
+        }
+
+        String seperate = Character.toString((char)257);
+        StringBuilder sb = new StringBuilder();
+        for(String st : strs){
+            sb.append(st);
+            sb.append(seperate);
+
+        }
+
+        sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
+
+
+    }
+
+    public List<String> decode(String s) {
+
+        if(s.equals(Character.toString((char)258))){
+            return new ArrayList();
+        }
+        String separte = Character.toString((char)257);
+
+        return Arrays.asList(s.split(separte,-1));
+
+
+
+    }
+}
 
